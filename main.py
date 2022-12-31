@@ -30,7 +30,7 @@ class App(customtkinter.CTk):
         self.sidebar_frame.grid_rowconfigure(4, weight=1)
         self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, text="Open Droid Caller", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
-        self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, text="Add droid", command=self.button_click_event)
+        self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, text="Add droid", command=self.add_droid_button_event)
         self.sidebar_button_1.grid(row=1, column=0, padx=20, pady=10)
         self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, text="Add program", command=self.sidebar_button_event)
         self.sidebar_button_2.grid(row=2, column=0, padx=20, pady=10)
@@ -78,9 +78,9 @@ class App(customtkinter.CTk):
     def sidebar_button_event(self):
         print("sidebar_button click")
 
-    def button_click_event(self):
+    def add_droid_button_event(self):
         dialog = modal.ModalInput(modal_inputs=[{"text": "Name"}, {"text": "ip-address"}], title="Test")
-        print("Number:", dialog.get_input())
+        print("New Droid:", dialog.get_input())
 
 
 if __name__ == "__main__":

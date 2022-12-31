@@ -31,7 +31,8 @@ class ModalInput(customtkinter.CTkToplevel):
         self._entry_border_color = customtkinter.ThemeManager.theme["CTkEntry"]["border_color"] if entry_border_color is None else self._check_color_type(entry_border_color)
         self._entry_text_color = customtkinter.ThemeManager.theme["CTkEntry"]["text_color"] if entry_text_color is None else self._check_color_type(entry_text_color)
 
-        self._user_input: Union[str, None] = None
+        self._user_input: dict = {}
+        self._entries: dict = {}
         self._running: bool = False
         self._modal_inputs = modal_inputs
 
@@ -70,9 +71,6 @@ class ModalInput(customtkinter.CTkToplevel):
                                         command=self._ok_event)
         self._cancel_button.grid(row=3, column=2, columnspan=1, padx=(10, 20), pady=(0, 20), sticky="ew")
 
-        self.after(150, lambda: self._entry.focus())  # set focus to entry with slight delay, otherwise it won't work
-        self._entry.bind("<Return>", self._ok_event)
-
     def _create_input_rows(self):
         for index, input in enumerate(self._modal_inputs):
             print(input)
@@ -84,15 +82,20 @@ class ModalInput(customtkinter.CTkToplevel):
                                 text=input["text"],)
             self._label.grid(row=index, column=0, columnspan=1, padx=20, pady=20, sticky="ew")
 
-            self._entry1 = customtkinter.CTkEntry(master=self,
+            self._entries['_entry' + str(index)] = customtkinter.CTkEntry(master=self,
                                 width=300,
                                 fg_color=self._entry_fg_color,
                                 border_color=self._entry_border_color,
                                 text_color=self._entry_text_color)
-            self._entry1.grid(row=index, column=1, columnspan=2, padx=20, pady=(0, 20), sticky="ew")
+            self._entries['_entry' + str(index)].grid(row=index, column=1, columnspan=2, padx=20, pady=(0, 20), sticky="ew")
+        
+        self.after(150, lambda: self._entries['_entry0'].focus())  # set focus to entry with slight delay, otherwise it won't work
+        self._entries['_entry' + str(len(self._modal_inputs) - 1)].bind("<Return>", self._ok_event)
 
     def _ok_event(self, event=None):
-        self._user_input = self._entry.get()
+        for index, input in enumerate(self._modal_inputs):
+            self._user_input[input['text']] = self._entries['_entry' + str(index)].get()
+
         self.grab_release()
         self.destroy()
 
