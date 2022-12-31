@@ -34,8 +34,10 @@ class App(customtkinter.CTk):
         self.sidebar_button_1.grid(row=1, column=0, padx=20, pady=10)
         self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, text="Add program", command=self.sidebar_button_event)
         self.sidebar_button_2.grid(row=2, column=0, padx=20, pady=10)
-        self.sidebar_button_3 = customtkinter.CTkButton(self.sidebar_frame, text="Sync program", command=self.sidebar_button_event)
+        self.sidebar_button_3 = customtkinter.CTkButton(self.sidebar_frame, text="Add mission", command=self.sidebar_button_event)
         self.sidebar_button_3.grid(row=3, column=0, padx=20, pady=10)
+        self.sidebar_button_4 = customtkinter.CTkButton(self.sidebar_frame, text="Deploy mission", command=self.sidebar_button_event)
+        self.sidebar_button_4.grid(row=4, column=0, padx=20, pady=10)
         self.appearance_mode_label = customtkinter.CTkLabel(self.sidebar_frame, text="Appearance Mode:", anchor="w")
         self.appearance_mode_label.grid(row=5, column=0, padx=20, pady=(10, 0))
         self.appearance_mode_optionemenu = customtkinter.CTkOptionMenu(self.sidebar_frame, values=["Light", "Dark", "System"],
@@ -47,6 +49,7 @@ class App(customtkinter.CTk):
         self.tabview.pack(padx=20, pady=20)
 
         self.tabview.add("Overview")
+        self.tabview.add("Missions")
         self.tabview.add("Droids")
         self.tabview.add("Programs")
         self.tabview.set("Overview")
@@ -62,6 +65,10 @@ class App(customtkinter.CTk):
 
         self.programs_tab = self.tabview.tab("Programs")
         self.hello = customtkinter.CTkLabel(self.programs_tab, text="01010010111010", font=customtkinter.CTkFont(size=20, weight="bold"))
+        self.hello.grid(row=1, column=2)
+
+        self.programs_tab = self.tabview.tab("Missions")
+        self.hello = customtkinter.CTkLabel(self.programs_tab, text="Roger Roger", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.hello.grid(row=1, column=2)
 
 
